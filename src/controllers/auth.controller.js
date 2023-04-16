@@ -1,5 +1,4 @@
 const UserService = require("../services/User.service")
-const Users = require('../database/models/User.model')
 
 class AuthController {
   Service = new UserService()
