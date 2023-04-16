@@ -4,7 +4,8 @@ const database = require("../database");
 const User = database.define("User", {
   id: {
     type: UUID,
-    defaultValue: UUIDV4
+    defaultValue: UUIDV4,
+    primaryKey: true
   },
   email: {
     type: STRING,
@@ -23,7 +24,9 @@ const User = database.define("User", {
     allowNull: false
   }
 }, {
-  tableName: "Users"
+  tableName: "Users",
+  createdAt: false,
+  updatedAt: false
 })
 
 module.exports = User

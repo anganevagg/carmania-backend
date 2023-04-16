@@ -4,6 +4,12 @@ const HttpError = require('../helpers/HttpError')
 
 class UserService {
   async createUser(email, password, first_name, last_name) {
+    const foundUser = await User.findOne({
+      where: {
+        email
+      }
+    })
+    if (foundUser) throw new HttpError('Email already in use', 400)
     const userCreated = await User.create({
       email,
       password: await hashPassword(password),
@@ -18,7 +24,8 @@ class UserService {
         email: email
       }
     })
-    if (!(foundUser || await comparePassword(password, foundUser.password))) throw new HttpError('User or password is incorrect', 400)
+    if (!foundUser) throw new HttpError('User or password is incorrect', 400)
+    if (!await comparePassword(password, foundUser.password)) throw new HttpError('User or password is incorrect', 400)
     delete foundUser.dataValues.password
     return foundUser
   }

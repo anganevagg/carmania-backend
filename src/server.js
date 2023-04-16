@@ -9,7 +9,8 @@ const app = express()
  * Middlewares
  */
 database.sync({
-  logging: console.log
+  logging: console.log,
+  // force: true
 })
 
 app.use(morgan('dev'))
@@ -18,4 +19,4 @@ app.use(express.json())
 app.use(require('./routes/router'))
 app.use(ErrorHandler)
 
-module.exports = app 
+module.exports = app
