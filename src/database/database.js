@@ -6,7 +6,7 @@ const {
   DB_PORT,
   DB_PASSWORD,
   DB_NAME
-} = require('../settings/settings')
+} = require('../config/config')
 
 const options = {
   logging: false
@@ -27,6 +27,6 @@ const database = () => {
   return new Sequelize(DB_URL, {
     ...options
   })
-} 
+}
 
 module.exports = database()
