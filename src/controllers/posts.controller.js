@@ -49,6 +49,32 @@ class PostsController {
       next(error)
     }
   }
+  deleteFavoritePost = async (req, res, next) => {
+    try {
+      const { user_id, post_id } = req.body
+      const response = await this.Service.deleteFavoritePost(user_id, post_id)
+      res.json({
+        message: 'Post marked as not favorite',
+        data: {
+          deleted: response
+        }
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
+  getAllFavoritePosts = async (req, res, next) => {
+    try {
+      const { user_id } = req.params
+      const response = await this.Service.getAllFavoritePosts(user_id)
+      res.json({
+        message: 'All favorite posts',
+        data: response
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = PostsController

@@ -45,6 +45,31 @@ class PostsService {
     })
     return createdFavoritePost
   }
+  async getAllFavoritePosts(user_id) {
+    // TODO: buscar si hay solucion
+    const foundUser = await User.findByPk(user_id)
+    if (!foundUser) throw new HttpError('User not found', 400)
+    const foundFavoritePosts = await FavoritePost.findAll({
+      logging: console.log
+    })
+    console.log()
+    return foundFavoritePosts
+  }
+  async deleteFavoritePost(user_id, post_id) {
+    const foundUser = await User.findByPk(user_id)
+    if (!foundUser) throw new HttpError('User not found', 400)
+    const foundPost = await Post.findByPk(post_id)
+    if (!foundPost) throw new HttpError('Post not found', 400)
+    const foundFavoritePost = await FavoritePost.findOne({
+      where: {
+        user_id,
+        post_id
+      }
+    })
+    if (!foundFavoritePost) throw new HttpError('Not in favorite post', 400)
+    await foundFavoritePost.destroy()
+    return true
+  }
 }
 
 module.exports = PostsService

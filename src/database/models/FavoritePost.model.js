@@ -3,7 +3,7 @@ const database = require("../database");
 const Post = require("./Post.model");
 const User = require("./User.model");
 
-const FavoritePost = database.define('FavoritePost', {
+const FavoritePosts = database.define('FavoritePosts', {
   user_id: {
     type: UUID,
     allowNull: false
@@ -13,17 +13,20 @@ const FavoritePost = database.define('FavoritePost', {
     allowNull: false
   }
 }, {
-  tableName: 'Favorite_Posts'
+  tableName: 'Favorite_Posts',
+  timestamps: false
 })
 
 User.belongsToMany(Post, {
+  through: FavoritePosts,
   foreignKey: 'user_id',
-  through: FavoritePost
+  as: 'User'
 })
 
 Post.belongsToMany(User, {
+  through: FavoritePosts,
   foreignKey: 'post_id',
-  through: FavoritePost
+  as: 'Post'
 })
 
-module.exports = FavoritePost
+module.exports = FavoritePosts
