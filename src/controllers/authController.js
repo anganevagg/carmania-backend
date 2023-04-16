@@ -6,9 +6,15 @@ class AuthController {
   login = async (req, res, next) => {
     try {
       const { email, password } = req.body
-      const response = await this.Service.checkUser({
+      const response = await this.Service.checkUser(
         email,
         password
+      )
+      res.json({
+        message: 'Logged in',
+        data: {
+          id: response.id
+        }
       })
     } catch (error) {
       next(error)
@@ -17,16 +23,10 @@ class AuthController {
   signUp = async (req, res, next) => {
     try {
       const { email, password, first_name, last_name } = req.body
-      const userData = {
-        email,
-        password,
-        first_name,
-        last_name
-      }
-      const response = await this.Service.createUser(userData)
+      const response = await this.Service.createUser(email, password, first_name, last_name)
       res.json({
         message: 'User created',
-        user: {
+        data: {
           id: response.id
         }
       })
