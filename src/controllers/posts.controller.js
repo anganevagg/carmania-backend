@@ -37,6 +37,18 @@ class PostsController {
       next(error)
     }
   }
+  markPostAsFavorite = async (req, res, next) => {
+    try {
+      const { user_id, post_id } = req.body
+      const response = await this.Service.markPostAsFavoriteById(user_id, post_id)
+      res.json({
+        message: 'Added to favorite posts',
+        data: response
+      })
+    } catch (error) {
+      next(error)
+    }
+  }
 }
 
 module.exports = PostsController

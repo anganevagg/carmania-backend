@@ -1,3 +1,4 @@
+const FavoritePost = require("../database/models/FavoritePost.model")
 const Post = require("../database/models/Post.model")
 const User = require("../database/models/User.model")
 const HttpError = require("../helpers/HttpError")
@@ -25,6 +26,24 @@ class PostsService {
   async getAllPosts() {
     const foundPosts = await Post.findAll()
     return foundPosts
+  }
+  async markPostAsFavoriteById(user_id, post_id) {
+    const foundUser = await User.findByPk(user_id)
+    if (!foundUser) throw new HttpError('User not found', 400)
+    const foundPost = await Post.findByPk(post_id)
+    if (!foundPost) throw new HttpError('Post not found', 400)
+    const foundFavoritePost = await FavoritePost.findOne({
+      where: {
+        user_id,
+        post_id
+      }
+    })
+    if (foundFavoritePost) throw new HttpError('Favorite post is already marked', 400)
+    const createdFavoritePost = await FavoritePost.create({
+      user_id,
+      post_id
+    })
+    return createdFavoritePost
   }
 }
 
