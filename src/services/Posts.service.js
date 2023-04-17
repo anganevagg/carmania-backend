@@ -1,3 +1,4 @@
+const { col } = require("sequelize")
 const FavoritePost = require("../database/models/FavoritePost.model")
 const Post = require("../database/models/Post.model")
 const User = require("../database/models/User.model")
@@ -50,9 +51,16 @@ class PostsService {
     const foundUser = await User.findByPk(user_id)
     if (!foundUser) throw new HttpError('User not found', 400)
     const foundFavoritePosts = await FavoritePost.findAll({
-      logging: console.log
+      where: {
+        user_id
+      },
+      include: [{
+        model: Post,
+        where: {
+          '$FavoritePost.id$': '$Post.id$'
+        }
+      }]
     })
-    console.log()
     return foundFavoritePosts
   }
   async deleteFavoritePost(user_id, post_id) {

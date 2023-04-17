@@ -17,16 +17,26 @@ const FavoritePosts = database.define('FavoritePosts', {
   timestamps: false
 })
 
-User.belongsToMany(Post, {
-  through: FavoritePosts,
-  foreignKey: 'user_id',
-  as: 'User'
-})
+// User.belongsTo(FavoritePosts, {
+//   foreignKey: 'user_id',
+//   targetKey: 'id'
+// })
 
-Post.belongsToMany(User, {
-  through: FavoritePosts,
-  foreignKey: 'post_id',
-  as: 'Post'
-})
+// FavoritePosts.hasOne(User, {
+//   foreignKey: 'user_id',
+//   sourceKey: 'id'
+// })
+
+
+// Post.belongsTo(FavoritePosts, {
+//   foreignKey: 'post_id',
+//   targetKey: 'id'
+// })
+
+// FavoritePosts.hasOne(Post, {
+//   foreignKey: 'post_id',
+//   sourceKey: 'id'
+// })
+
 
 module.exports = FavoritePosts

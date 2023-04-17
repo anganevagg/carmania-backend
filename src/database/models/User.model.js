@@ -9,7 +9,10 @@ const User = database.define("User", {
   },
   email: {
     type: STRING,
-    allowNull: false
+    allowNull: false,
+    validate: {
+      isEmail: true
+    }
   },
   password: {
     type: STRING,
