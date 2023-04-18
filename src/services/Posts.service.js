@@ -3,6 +3,7 @@ const FavoritePost = require("../database/models/FavoritePost.model")
 const Post = require("../database/models/Post.model")
 const User = require("../database/models/User.model")
 const HttpError = require("../helpers/HttpError")
+const Comment = require("../database/models/Comment.model")
 
 class PostsService {
   async getAllUserPosts(user_id) {
@@ -32,7 +33,11 @@ class PostsService {
     return createdPost
   }
   async getOnePostById(id) {
-    const foundPost = await Post.findByPk(id)
+    const foundPost = await Post.findByPk(id, {
+      include: [{
+        model: Comment,
+      }]
+    })
     if (!foundPost) throw new HttpError('Post not found', 400)
     return foundPost
   }
