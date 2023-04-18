@@ -2,6 +2,14 @@ const PostsService = require("../services/Posts.service")
 
 class PostsController {
   Service = new PostsService()
+  getUserPosts = async (req, res, next) => {
+    try {
+      const { user_id } = req.params
+      this.Service.getAllUserPosts(user_id)
+    } catch (error) {
+      next(error)
+    }
+  }
   createPost = async (req, res, next) => {
     try {
       const { title, content, user_id } = req.body

@@ -5,6 +5,18 @@ const User = require("../database/models/User.model")
 const HttpError = require("../helpers/HttpError")
 
 class PostsService {
+  async getAllUserPosts(user_id) {
+    const foundPosts = await Post.findAll({
+      where: {
+        user_id
+      },
+      include: [{
+        model: User,
+        attributes: ['first_name', 'last_name']
+      }]
+    })
+    return foundPosts
+  }
   async createPost(title, content, user_id) {
     const foundUser = await User.findOne({
       where: {
