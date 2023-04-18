@@ -25,7 +25,12 @@ class PostsService {
     return foundPost
   }
   async getAllPosts() {
-    const foundPosts = await Post.findAll()
+    const foundPosts = await Post.findAll({
+      include: [{
+        model: User,
+        attributes: ['first_name', 'last_name']
+      }]
+    })
     return foundPosts
   }
   async markPostAsFavoriteById(user_id, post_id) {
