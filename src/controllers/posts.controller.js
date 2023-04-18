@@ -5,7 +5,11 @@ class PostsController {
   getUserPosts = async (req, res, next) => {
     try {
       const { user_id } = req.params
-      this.Service.getAllUserPosts(user_id)
+      const response = await this.Service.getAllUserPosts(user_id)
+      res.json({
+        message: 'User posts',
+        data: response
+      })
     } catch (error) {
       next(error)
     }
