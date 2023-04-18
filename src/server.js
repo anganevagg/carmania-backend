@@ -10,7 +10,7 @@ const app = express()
  */
 database.sync({
   logging: console.log,
-  force: true
+  // force: true
 })
 
 app.use(morgan('dev'))

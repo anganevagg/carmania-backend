@@ -5,7 +5,8 @@
   "author": "anganevagg <anganevagg@protonmail.com>",
   "license": "MIT",
   "scripts": {
-    "start:dev": "nodemon src/index.js"
+    "start:dev": "nodemon src/index.js",
+    "start": "node src/index.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
